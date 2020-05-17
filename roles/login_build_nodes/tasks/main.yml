@@ -52,6 +52,11 @@
    - name: disable dhcp if required
      service: name=dhcpd state=stopped enabled=no
      when: dhcpd_enabled == false
+
+   - name: add Active Directory files to provision
+     command: wwsh -y provision set {{ item.name }} --fileadd=krb5.keytab,krb5.conf,sssd.conf
+     with_items: "{{ login_nodes }}"
+     when: enable_active_directory == true
  
    - name: update pxeconfig to let node boot from pxe
      command: wwsh -y object modify -D bootlocal -t node {{ item.name }}

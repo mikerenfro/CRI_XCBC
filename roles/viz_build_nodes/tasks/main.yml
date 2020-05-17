@@ -48,6 +48,11 @@
    - name: restart dhcp if required
      service: name=dhcpd state=restarted enabled=yes
      when: dhcpd_enabled == true
+
+   - name: add Active Directory files to provision
+     command: wwsh -y provision set {{ item.name }} --fileadd=krb5.keytab,krb5.conf,sssd.conf
+     with_items: "{{ viz_nodes }}"
+     when: enable_active_directory == true
  
    - name: disable dhcp if required
      service: name=dhcpd state=stopped enabled=no
