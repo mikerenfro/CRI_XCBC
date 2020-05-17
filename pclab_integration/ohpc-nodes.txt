@@ -1,0 +1,3 @@
+# ohpc-nodes.txt
+bldg101-[0-9]*
+# bldg102-[0-9]*
